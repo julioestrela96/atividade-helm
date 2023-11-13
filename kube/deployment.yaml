@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: django-todo
+  name: django-todo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: django-todo
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: django-todo
+    spec:
+      containers:
+      - image: django-todo:1.1.0
+        name: django-todo
+        imagePullPolicy: Never
+        ports:
+          - containerPort: 8000
+        volumeMounts: 
+         - name: data-volume
+           mountPath: /data/db
+        command: ['sh', '-c', 'python manage.py migrate && python manage.py runserver 0.0.0.0:8000']
+      volumes:
+        - name: data-volume
+          persistentVolumeClaim:
+            claimName: django-todo-pvc
