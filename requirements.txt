@@ -1,0 +1,7 @@
+Django==3.2
+psycopg2-binary==2.9.3
+pytz
+sqlparse>=0.2.2
+asgiref<4,>=3.3.2
+typing-extensions>=4
+
